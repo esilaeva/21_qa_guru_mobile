@@ -1,16 +1,20 @@
 package helpers;
 
+import config.AuthConfig;
+import org.aeonbits.owner.ConfigFactory;
+
 import static io.restassured.RestAssured.given;
 import static java.lang.String.format;
 
 public class Browserstack {
-    // curl -u "qagurumobile_piB8or:dqCgQsyscHYt4iEy2vUi" -X GET "https://api.browserstack.com/app-automate/sessions/<session-id>.json"
+
+    static AuthConfig authConfig = ConfigFactory.create(AuthConfig.class, System.getProperties());
 
     public static String videoUrl(String sessionId) {
         String url = format("https://api.browserstack.com/app-automate/sessions/%s.json", sessionId);
 
         return given()
-                .auth().basic("ilananull_TMCs07", "y3sGJ2SGa4wB5615Xycy")
+                .auth().basic(authConfig.getUserName(), authConfig.getAccessKey())
                 .when()
                 .get(url)
                 .then()

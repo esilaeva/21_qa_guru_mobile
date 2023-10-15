@@ -9,15 +9,18 @@ import java.net.MalformedURLException;
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selectors.byTitle;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static io.appium.java_client.AppiumBy.accessibilityId;
 import static io.appium.java_client.AppiumBy.id;
 import static io.qameta.allure.Allure.step;
+import static org.openqa.selenium.By.xpath;
 
 public class AndroidTests extends TestBase {
 
     @Test
+    @Tag("android")
     void successfulSearchTest() {
         step("Type search", () -> {
             $(accessibilityId("Search Wikipedia")).click();
@@ -30,7 +33,7 @@ public class AndroidTests extends TestBase {
 
     @Test
     @Tag("android")
-    void successfulOpenArticle() throws MalformedURLException, InterruptedException {
+    void openArticle() throws MalformedURLException, InterruptedException {
 
         step("Type search", () -> {
             $(accessibilityId("Search Wikipedia")).click();
@@ -38,15 +41,10 @@ public class AndroidTests extends TestBase {
         });
 
         step("Open article", () -> {
-            $(id("org.wikipedia.alpha:id/page_list_item_title")).click();
+            $(xpath("//*[@text='Selenidera']")).click();
         });
 
-        //
-        // Selenidera
-        //        org.wikipedia.alpha:id/page_list_item_title
-
-
-        step("Verify content found", () -> {
+        step("Checking for error text", () -> {
             $(id("org.wikipedia.alpha:id/view_wiki_error_text")).shouldBe(visible);
         });
     }

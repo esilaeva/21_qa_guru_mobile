@@ -1,6 +1,9 @@
 package drivers;
 
 import com.codeborne.selenide.WebDriverProvider;
+import config.AuthConfig;
+import config.MobileConfig;
+import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.WebDriver;
@@ -12,35 +15,36 @@ import java.net.URL;
 
 public class BrowserstackDriver implements WebDriverProvider {
 
+    static MobileConfig config = ConfigFactory.create(MobileConfig.class, System.getProperties());
+    static AuthConfig authConfig = ConfigFactory.create(AuthConfig.class, System.getProperties());
+
     @Nonnull
     @Override
     public WebDriver createDriver(@Nonnull Capabilities capabilities) {
         MutableCapabilities mutableCapabilities = new MutableCapabilities();
 
         // Set your access credentials
-        mutableCapabilities.setCapability("browserstack.user", "ilananull_TMCs07");
-        mutableCapabilities.setCapability("browserstack.key", "y3sGJ2SGa4wB5615Xycy");
-
-//        mutableCapabilities.setCapability("browserstack.user", "ilananull_TMCs07");
-//        mutableCapabilities.setCapability("browserstack.key", "y3sGJ2SGa4wB5615Xycy");
+        mutableCapabilities.setCapability("browserstack.user", authConfig.getUserName());
+        mutableCapabilities.setCapability("browserstack.key", authConfig.getAccessKey());
 
         // Set URL of the application under test
-        mutableCapabilities.setCapability("app", "bs://c700ce60cf13ae8ed97705a55b8e022f13c5827c");
+        mutableCapabilities.setCapability("app", config.getApp());
 
         // Specify device and os_version for testing
-        mutableCapabilities.setCapability("device", "Google Pixel 3");
-        mutableCapabilities.setCapability("os_version", "9.0");
+        mutableCapabilities.setCapability("deviceName", config.getDeviceName());
+        mutableCapabilities.setCapability("platformVersion", config.getPlatformVersion());
+        mutableCapabilities.setCapability("platformName", config.getPlatformName());
 
         // Set other BrowserStack capabilities
-        mutableCapabilities.setCapability("project", "First Java Project");
-        mutableCapabilities.setCapability("build", "browserstack-build-1");
-        mutableCapabilities.setCapability("name", "first_test");
+        mutableCapabilities.setCapability("projectName", config.getProject());
+        mutableCapabilities.setCapability("build", config.getBuild());
+        mutableCapabilities.setCapability("name", config.getTestName());
 
         // Initialise the remote Webdriver using BrowserStack remote URL
         // and desired capabilities defined above
         try {
             return new RemoteWebDriver(
-                    new URL("https://hub.browserstack.com/wd/hub"), mutableCapabilities);
+                    new URL(config.getRemoteUrl()), mutableCapabilities);
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
