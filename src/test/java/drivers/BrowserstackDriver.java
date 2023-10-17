@@ -23,28 +23,19 @@ public class BrowserstackDriver implements WebDriverProvider {
     public WebDriver createDriver(@Nonnull Capabilities capabilities) {
         MutableCapabilities mutableCapabilities = new MutableCapabilities();
 
-        // Set your access credentials
         mutableCapabilities.setCapability("browserstack.user", authConfig.getUserName());
         mutableCapabilities.setCapability("browserstack.key", authConfig.getAccessKey());
-
-        // Set URL of the application under test
         mutableCapabilities.setCapability("app", config.getApp());
-
-        // Specify device and os_version for testing
         mutableCapabilities.setCapability("deviceName", config.getDeviceName());
         mutableCapabilities.setCapability("platformVersion", config.getPlatformVersion());
         mutableCapabilities.setCapability("platformName", config.getPlatformName());
-
-        // Set other BrowserStack capabilities
         mutableCapabilities.setCapability("projectName", config.getProject());
         mutableCapabilities.setCapability("build", config.getBuild());
         mutableCapabilities.setCapability("name", config.getTestName());
 
-        // Initialise the remote Webdriver using BrowserStack remote URL
-        // and desired capabilities defined above
         try {
             return new RemoteWebDriver(
-                    new URL(config.getRemoteUrl()), mutableCapabilities);
+                    new URL(authConfig.getRemoteUrl()), mutableCapabilities);
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
