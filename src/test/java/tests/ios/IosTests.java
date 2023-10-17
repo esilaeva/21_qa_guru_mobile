@@ -15,54 +15,25 @@ public class IosTests extends TestBase {
 
     @Test
     @Tag("ios")
-    @DisplayName("Find tab 'Newest'")
+    @DisplayName("Check search result")
     void enterTextTest() {
 
-        step("Click tab 'Newest'", () -> {
-            $(xpath("/XCUIElementTypeApplication/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeSegmentedControl/XCUIElementTypeButton[2]")).click();
+        step("Click button Text", () -> {
+            $(id("Text Button")).click();
         });
 
-//        step("Нажать на поле Enter a text", () -> {
-//            $(id("Text Input")).click();
-//        });
-//
-//        step("Ввести в поле Enter a text текст Hello QA.GURU и нажать Enter", () -> {
-//            $(id("Text Input")).sendKeys("Hello QA.GURU");
-//            $(id("Text Input")).pressEnter();
-//        });
+        step("Click 'Enter a text'", () -> {
+            $(id("Text Input")).click();
+        });
 
-        step("Verify that tab 'Newest' was opened", () -> {
-            assertThat($(xpath("/XCUIElementTypeApplication/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeTable/XCUIElementTypeCell[3]/XCUIElementTypeStaticText[2]")).getText())
-                    .isEqualTo("1 points by artembugara");
+        step("Set text and press Enter", () -> {
+            $(id("Text Input")).sendKeys("Appium");
+            $(id("Text Input")).pressEnter();
+        });
+
+        step("Verify result", () -> {
+            assertThat($(id("Text Output")).getText())
+                    .isEqualTo("Appium");
         });
     }
-
-    //Newest
-    //	1 points by melenaboija
-  //  XCUIElementTypeStaticText
-   // Citibank wins case after sacking banker over two-sandwich lunch claim
-
-//    @Test
-//    @Tag("ios")
-//    @DisplayName("Проверка ввода и отображения текста в UI Elements")
-//    void secondTest() {
-//
-//        step("Нажать на кнопку Text", () -> {
-//            $(id("Text Button")).click();
-//        });
-//
-//        step("Нажать на поле Enter a text", () -> {
-//            $(id("Text Input")).click();
-//        });
-//
-//        step("Ввести в поле Enter a text текст Hello QA.GURU и нажать Enter", () -> {
-//            $(id("Text Input")).sendKeys("Hello QA.GURU");
-//            $(id("Text Input")).pressEnter();
-//        });
-//
-//        step("Проверка отображения результата с заданным текстом", () -> {
-//            assertThat($(id("Text Output")).getText())
-//                    .isEqualTo("Hello QA.GURU");
-//        });
-//    }
 }
