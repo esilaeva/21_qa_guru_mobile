@@ -19,7 +19,7 @@ public class IosTests extends TestBase {
     void enterTextTest() {
 
         step("Click tab 'Newest'", () -> {
-            $(xpath("//*[@text='Newest']")).click();
+            $(xpath("/XCUIElementTypeApplication/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeSegmentedControl/XCUIElementTypeButton[2]")).click();
         });
 
 //        step("Нажать на поле Enter a text", () -> {
@@ -32,8 +32,8 @@ public class IosTests extends TestBase {
 //        });
 
         step("Verify that tab 'Newest' was opened", () -> {
-            assertThat($(xpath("[XCUIElementTypeStaticText]")).getText())
-                    .isEqualTo("1 points by marban");
+            assertThat($(xpath("/XCUIElementTypeApplication/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeTable/XCUIElementTypeCell[3]/XCUIElementTypeStaticText[2]")).getText())
+                    .isEqualTo("1 points by artembugara");
         });
     }
 
