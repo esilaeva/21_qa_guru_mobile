@@ -9,7 +9,6 @@ import static com.codeborne.selenide.Selenide.$;
 import static io.appium.java_client.AppiumBy.id;
 import static io.qameta.allure.Allure.step;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.openqa.selenium.By.xpath;
 
 public class IosTests extends TestBase {
 
