@@ -15,8 +15,8 @@ import java.net.URL;
 
 public class BrowserstackDriver implements WebDriverProvider {
 
-    static MobileConfig config = ConfigFactory.create(MobileConfig.class, System.getProperties());
-    static AuthConfig authConfig = ConfigFactory.create(AuthConfig.class, System.getProperties());
+    protected static MobileConfig config = ConfigFactory.create(MobileConfig.class, System.getProperties());
+    protected static AuthConfig authConfig = ConfigFactory.create(AuthConfig.class, System.getProperties());
 
     @Nonnull
     @Override
@@ -27,7 +27,8 @@ public class BrowserstackDriver implements WebDriverProvider {
         mutableCapabilities.setCapability("browserstack.key", authConfig.getAccessKey());
         mutableCapabilities.setCapability("app", config.getApp());
         mutableCapabilities.setCapability("deviceName", config.getDeviceName());
-        mutableCapabilities.setCapability("platformVersion", config.getPlatformVersion());
+        mutableCapabilities.setCapability("platformVersion", config.getVersion());
+
         mutableCapabilities.setCapability("platformName", config.getPlatformName());
         mutableCapabilities.setCapability("projectName", config.getProject());
         mutableCapabilities.setCapability("build", config.getBuild());
@@ -36,6 +37,7 @@ public class BrowserstackDriver implements WebDriverProvider {
         try {
             return new RemoteWebDriver(
                     new URL(authConfig.getRemoteUrl()), mutableCapabilities);
+//                    new URL("https://hub.browserstack.com/wd/hub"), mutableCapabilities);
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
