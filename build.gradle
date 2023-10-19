@@ -3,19 +3,22 @@ plugins {
     id 'io.qameta.allure' version '2.11.2'
 }
 
+group = 'guru.qa'
+version = '1.0-SNAPSHOT'
+
 repositories {
     mavenCentral()
 }
 
-compileTestJava {
-    options.encoding = 'UTF-8'
-}
-
 def selenideVersion = "6.13.0",
-    restAssuredVersion = "5.3.0",
+    appiumVersion = "8.3.0",
     allureVersion = "2.21.0",
+    slf4jVersion = "2.0.7",
     junitVersion = "5.9.3",
-    slf4jVersion = "2.0.7"
+    restAssuredVersion = "5.3.0",
+    ownerVersion = "1.0.4",
+    assertjVersion = "3.24.2"
+
 
 allure {
     report {
@@ -32,25 +35,21 @@ allure {
 }
 
 dependencies {
-    testImplementation(
+    testImplementation (
             "com.codeborne:selenide:$selenideVersion",
             "io.qameta.allure:allure-selenide:$allureVersion",
-            "io.appium:java-client:8.3.0",
+            "io.appium:java-client:$appiumVersion",
+            "org.aeonbits.owner:owner:$ownerVersion",
             "io.rest-assured:rest-assured:$restAssuredVersion",
             "org.junit.jupiter:junit-jupiter:$junitVersion",
-            "org.assertj:assertj-core:3.24.2",
-            "org.junit.jupiter:junit-jupiter:5.9.2",
-            "org.aeonbits.owner:owner:1.0.4",
-            "com.github.javafaker:javafaker:1.0.2",
-            "org.aeonbits.owner:owner-java8:1.0.12",
-            "commons-io:commons-io:2.11.0",
-            'io.github.bonigarcia:webdrivermanager:5.3.2',
-            "org.slf4j:slf4j-simple:$slf4jVersion"
+            "org.slf4j:slf4j-simple:$slf4jVersion",
+            "org.assertj:assertj-core:$assertjVersion"
     )
 }
 
 tasks.withType(Test) {
     useJUnitPlatform()
+    systemProperties(System.getProperties())
 
     testLogging {
         lifecycle {
@@ -65,6 +64,7 @@ task android_test(type: Test) {
         includeTags("android")
     }
 }
+
 task ios_test(type: Test) {
     useJUnitPlatform {
         includeTags("ios")
