@@ -12,7 +12,7 @@ public interface MobileConfig extends Config {
     @DefaultValue("android")
     String getPlatformName();
 
-    @Key("deviceName")
+    @Key("device")
     @DefaultValue("Samsung Galaxy S22 Ultra")
     String getDeviceName();
 
